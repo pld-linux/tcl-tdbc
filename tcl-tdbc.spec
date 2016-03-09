@@ -8,6 +8,7 @@ Group:		Libraries
 Source0:	http://downloads.sourceforge.net/tcl/tdbc%{version}.tar.gz
 # Source0-md5:	5b88b4f2ed851b97bc4c391203788c09
 URL:		http://tdbc.tcl.tk/
+BuildRequires:	sed >= 4.0
 BuildRequires:	tcl-devel >= 8.5
 Requires:	tcl >= 8.5
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -28,6 +29,7 @@ Summary:	Development files for Tcl TDBC module
 Summary(pl.UTF-8):	Pliki programistyczna modułu Tcl TDBC
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
+Requires:	tcl-devel >= 8.5
 
 %description devel
 Development files for Tcl TDBC module.
@@ -48,6 +50,9 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
+# allow dependency generation
+chmod 755 $RPM_BUILD_ROOT%{_libdir}/tdbc%{version}/*.so
+
 # hide build paths
 %{__sed} -e '/^[Tt][Dd][Bb][Cc]_BUILD_STUB_LIB_SPEC/s,-L.* -l,-L%{_libdir}/tdbc%{version} -l,' \
 	-e '/^[Tt][Dd][Bb][Cc]_BUILD_STUB_LIB_PATH/s,=".*libtdbcstub,="%{_libdir}/tdbc%{version}/libtdbcstub,' \
@@ -56,6 +61,9 @@ rm -rf $RPM_BUILD_ROOT
 	-e '/^[Tt][Dd][Bb][Cc]_LIBRARY_PATH/s,=".*",="%{_libdir}/tdbc%{version}",' \
 	-e '/^[Tt][Dd][Bb][Cc]_BUILD_LIBRARY_PATH/s,=".*",="%{_libdir}/tdbc%{version}",' \
 	-i $RPM_BUILD_ROOT%{_libdir}/tdbc%{version}/tdbcConfig.sh
+
+# tdbc drivers look here for tdbc configuration
+%{__mv} $RPM_BUILD_ROOT%{_libdir}/tdbc%{version}/tdbcConfig.sh $RPM_BUILD_ROOT%{_prefix}/lib
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -74,5 +82,5 @@ rm -rf $RPM_BUILD_ROOT
 %files devel
 %defattr(644,root,root,755)
 %{_libdir}/tdbc%{version}/libtdbcstub%{version}.a
-%{_libdir}/tdbc%{version}/tdbcConfig.sh
+%{_prefix}/lib/tdbcConfig.sh
 %{_mandir}/man3/Tdbc_Init.3*
