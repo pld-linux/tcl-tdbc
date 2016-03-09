@@ -63,6 +63,7 @@ chmod 755 $RPM_BUILD_ROOT%{_libdir}/tdbc%{version}/*.so
 	-i $RPM_BUILD_ROOT%{_libdir}/tdbc%{version}/tdbcConfig.sh
 
 # tdbc drivers look here for tdbc configuration
+install -d $RPM_BUILD_ROOT%{_prefix}/lib
 %{__mv} $RPM_BUILD_ROOT%{_libdir}/tdbc%{version}/tdbcConfig.sh $RPM_BUILD_ROOT%{_prefix}/lib
 
 %clean
