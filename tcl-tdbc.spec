@@ -1,13 +1,13 @@
 Summary:	TDBC - Tcl Database Connectivity
 Summary(pl.UTF-8):	TDBC - Tcl Database Connectivity (łączność Tcl z bazami danych)
 Name:		tcl-tdbc
-Version:	1.1.1
+Version:	1.1.10
 Release:	1
 License:	Tcl (BSD-like)
 Group:		Libraries
-Source0:	http://downloads.sourceforge.net/tcl/tdbc%{version}.tar.gz
-# Source0-md5:	3bd7c406dae9414ed14a9bb2e124d50e
-URL:		http://tdbc.tcl.tk/
+Source0:	https://downloads.sourceforge.net/tcl/tdbc%{version}.tar.gz
+# Source0-md5:	fde31e576f6399faaf5f6491023612da
+URL:		https://wiki.tcl-lang.org/page/TDBC
 BuildRequires:	sed >= 4.0
 BuildRequires:	tcl-devel >= 8.5
 Requires:	tcl >= 8.5
